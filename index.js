@@ -1,9 +1,11 @@
-let app = require("express")();
+const http = require("http");
+const express = require("express");
+const socketio = require("socket.io");
+const cors = require("cors");
 
-var http = require("http").Server(app);
-var cors = require("cors");
-var io = require("socket.io")(http);
-
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 app.use(cors());
 const users = [{}];
 
@@ -35,6 +37,6 @@ io.on("connection", function (socket) {
   });
 });
 
-http.listen(8000, function () {
-  console.log("Server runing at port 8000");
-});
+server.listen(process.env.PORT || 5000, () =>
+  console.log(`Server has started.`)
+);
