@@ -11,9 +11,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 const io = new Server(server, {
+  transports: ["websocket"],
   cors: {
     origin: "*",
-    methods: ["GET", "POST"],
+    credentials: true,
+    // methods: ["GET", "POST"],
   },
 });
 
