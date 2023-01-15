@@ -1,12 +1,22 @@
 const http = require("http");
 const express = require("express");
-const socketio = require("socket.io");
+// const socketio = require("socket.io");
+const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+// const io = socketio(server);
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
 const users = [{}];
 
 app.get("/", function (req, res) {
