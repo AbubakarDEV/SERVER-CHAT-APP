@@ -25,6 +25,11 @@ app.get("/", function (req, res) {
 });
 
 io.on("connection", function (socket) {
+  const transport = socket.conn.transport.name; // in most cases, "polling"
+
+  socket.conn.on("upgrade", () => {
+    const upgradedTransport = socket.conn.transport.name; // in most cases, "websocket"
+  });
   socket.on("joined", (data) => {
     users[socket.id] = data.user;
 
